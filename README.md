@@ -29,7 +29,9 @@ The template relies on file-based routing to keep your logic strictly organized:
 This template abstracts away the boilerplate of registering commands and strict middleware routing for the Slack API. 
 
 - **Component Routing**: Supports granular, file-based routing for **Slash Commands**, **Actions**, **Views**, **Shortcuts**, and **Events**. Handlers automatically register themselves on boot without cluttering a central file.
-- **Built-in Execution Guards**: Intercept commands globally before execution. Support for `adminOnly` enforcement and per-user `cooldown` rates natively baked in.
+- **Built-in Execution Guards**: Intercept commands globally before execution. Support for `adminOnly`, `workspaceRestriction`, `channelType` restrictions, `requiredArgs` enforcement, and per-user `cooldown` rates natively baked in.
+- **Block Kit UI Builders**: Simplify your UI creation with programmatic, type-safe helpers.
+- **Testing Suite Included**: Comes pre-configured with `vitest` for blazing fast unit testing.
 - **Socket Mode Default**: Pre-configured to use Socket Mode out of the box for frictionless local development without needing public HTTP endpoints.
 
 > 📖 **[Read the Wiki](https://github.com/sea-deep/slack-app-template/wiki)** to learn how to create these commands and map your components.
@@ -72,6 +74,7 @@ This template abstracts away the boilerplate of registering commands and strict 
 | Mode | Command | Description |
 | :--- | :--- | :--- |
 | **Development** | `npm run dev` | Runs the app with `ts-node`. |
+| **Testing** | `npm test` | Runs the Vitest testing suite. |
 | **Production** | `npm run build && npm start` | Compiles the TypeScript to `dist/` and starts the Node process. |
 
 ---

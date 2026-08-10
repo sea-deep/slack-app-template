@@ -32,9 +32,16 @@ export async function loadActions(app: App): Promise<void> {
             name: actionName,
             adminOnly: action.adminOnly,
             cooldown: action.cooldown,
+            channelType: action.channelType,
+            workspaceRestriction: action.workspaceRestriction,
           },
           userId,
-          { ack, respond },
+          { 
+            ack, 
+            respond,
+            channelName: body.channel?.name,
+            workspaceId: body.team?.id
+          },
           autoAck
         );
 

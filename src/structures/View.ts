@@ -5,6 +5,7 @@ export interface View {
   adminOnly?: boolean;
   cooldown?: number;
   disabled?: boolean;
-  autoAck?: boolean; // Defaults to true
+  autoAck?: boolean;
+  workspaceRestriction?: string[];
   execute: (args: SlackViewMiddlewareArgs & AllMiddlewareArgs) => Promise<void>;
 }

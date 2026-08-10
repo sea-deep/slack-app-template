@@ -5,6 +5,8 @@ export interface Action<ActionType extends SlackAction = SlackAction> {
   adminOnly?: boolean;
   cooldown?: number;
   disabled?: boolean;
-  autoAck?: boolean; // Defaults to true
+  autoAck?: boolean;
+  channelType?: "direct_message" | "public_channel" | "private_channel" | "any";
+  workspaceRestriction?: string[];
   execute: (args: SlackActionMiddlewareArgs<ActionType> & AllMiddlewareArgs) => Promise<void>;
 }

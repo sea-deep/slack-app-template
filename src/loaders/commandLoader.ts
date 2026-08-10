@@ -30,9 +30,18 @@ export async function loadCommands(app: App): Promise<void> {
             name: command.name,
             adminOnly: command.adminOnly,
             cooldown: command.cooldown,
+            channelType: command.channelType,
+            workspaceRestriction: command.workspaceRestriction,
+            requiredArgs: command.requiredArgs,
           },
           payload.user_id,
-          { ack, respond },
+          { 
+            ack, 
+            respond,
+            channelName: payload.channel_name,
+            workspaceId: payload.team_id,
+            commandText: payload.text
+          },
           autoAck
         );
 

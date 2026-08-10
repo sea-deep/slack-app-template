@@ -1,5 +1,6 @@
 import { Command } from "../structures/Command.js";
 import { Logger } from "../utilities/logger.js";
+import { BlockBuilder } from "../helpers/ui/BlockBuilder.js";
 
 const pingCommand: Command = {
   name: "/ping",
@@ -12,7 +13,11 @@ const pingCommand: Command = {
     // We can respond because autoAck handles the ack()
     await respond({
       response_type: "ephemeral",
-      text: "🏓 Pong! The bot is alive and well.",
+      blocks: [
+        BlockBuilder.header("🏓 Pong!"),
+        BlockBuilder.section("The bot is alive and well."),
+        BlockBuilder.context(["Running on the new Slack App Template"]),
+      ]
     });
   },
 };

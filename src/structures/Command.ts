@@ -6,6 +6,9 @@ export interface Command {
   adminOnly?: boolean;
   cooldown?: number;
   disabled?: boolean;
-  autoAck?: boolean; // Defaults to true
+  autoAck?: boolean;
+  channelType?: "direct_message" | "public_channel" | "private_channel" | "any";
+  workspaceRestriction?: string[];
+  requiredArgs?: number;
   execute: (args: SlackCommandMiddlewareArgs & AllMiddlewareArgs) => Promise<void>;
 }

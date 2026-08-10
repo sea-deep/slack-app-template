@@ -33,9 +33,13 @@ export async function loadShortcuts(app: App): Promise<void> {
             name: shortcutName,
             adminOnly: shortcut.adminOnly,
             cooldown: shortcut.cooldown,
+            workspaceRestriction: shortcut.workspaceRestriction,
           },
           userId,
-          { ack },
+          { 
+            ack,
+            workspaceId: body.team?.id
+          },
           autoAck
         );
 

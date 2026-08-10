@@ -32,9 +32,13 @@ export async function loadViews(app: App): Promise<void> {
             name: viewName,
             adminOnly: view.adminOnly,
             cooldown: view.cooldown,
+            workspaceRestriction: view.workspaceRestriction,
           },
           userId,
-          { ack }, // Views don't typically use respond
+          { 
+            ack,
+            workspaceId: body.team?.id
+          },
           autoAck
         );
 
