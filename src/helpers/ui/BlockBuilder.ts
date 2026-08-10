@@ -1,4 +1,4 @@
-import { SectionBlock, ActionsBlock, DividerBlock, HeaderBlock, ContextBlock } from "@slack/bolt";
+import { SectionBlock, ActionsBlock, DividerBlock, HeaderBlock, ContextBlock } from "@slack/types";
 
 export class BlockBuilder {
   static header(text: string): HeaderBlock {
