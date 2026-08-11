@@ -11,9 +11,9 @@
 
 ---
 
-## 📁 Repository Structure
+## 🧩 Where to Place Your Code
 
-Where to place your code:
+The template relies on file-based routing to keep your logic strictly organized:
 
 - `src/configs/config.ts`: Define your bot's developer IDs and global execution guard messages here.
 - `src/commands/`: Place your strict Slash Commands (`/command`) here.
@@ -72,6 +72,29 @@ This template abstracts away the boilerplate of registering components and inter
 | **Development** | `npm run dev` | Runs the app with hot-reloading via `tsx`. |
 | **Production** | `npm run build && npm start` | Compiles the TypeScript to `dist/` and starts the Node process. |
 | **Testing** | `npm run test` | Executes the Vitest testing suite. |
+
+---
+
+## 📁 Detailed Project Structure
+
+```text
+slack-app-template/
+├── src/
+│   ├── configs/           # Centralized configuration (config.ts)
+│   ├── structures/        # TypeScript interfaces (Command, Action, View)
+│   ├── utilities/         # Global Maps (collections.ts) & Guards (guards.ts)
+│   ├── helpers/           # Helper classes (Logger, BlockBuilder)
+│   ├── handlers/          # Dynamic component loader (loadComponents.ts)
+│   ├── commands/          # ➔ Your Slash Commands
+│   ├── actions/           # ➔ Your Interactive Actions (Buttons, Menus)
+│   ├── views/             # ➔ Your Modals
+│   ├── shortcuts/         # ➔ Your Shortcuts
+│   ├── events/            # ➔ Your Event Listeners
+│   └── app.ts             # Main entry point (binds loaded components to Bolt)
+├── tests/                 # Vitest test suite
+├── .env.example           # Environment template
+└── package.json           # Dependencies and scripts
+```
 
 ---
 
