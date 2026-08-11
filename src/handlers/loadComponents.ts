@@ -7,6 +7,12 @@ import { commands, actions, views, shortcuts, events } from "../utilities/collec
  */
 export async function loadComponents(): Promise<void> {
   try {
+    commands.clear();
+    actions.clear();
+    views.clear();
+    shortcuts.clear();
+    events.clear();
+
     // 1. Load Commands
     const commandFiles = await resolveFiles("commands");
     for (const fileUrl of commandFiles) {
@@ -63,6 +69,6 @@ export async function loadComponents(): Promise<void> {
     Logger.success(`Loaded ${events.size} Events.`);
   } catch (error) {
     Logger.error("Failed to load components:", error);
-    process.exit(1);
+    throw error;
   }
 }
