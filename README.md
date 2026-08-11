@@ -3,7 +3,7 @@
   <p><i>A structured, modular, and professional template for building robust <a href="https://slack.dev/bolt-js">Slack Bolt</a> apps in TypeScript.</i></p>
   
   <p>
-    <a href="https://slack.dev/bolt-js"><img src="https://img.shields.io/badge/Slack_Bolt-v5-blue?style=for-the-badge&logo=slack" alt="Slack Bolt" /></a>
+    <a href="https://slack.dev/bolt-js/"><img src="https://img.shields.io/badge/Slack_Bolt-v5-blue?style=for-the-badge&logo=slack" alt="Slack Bolt v5" /></a>
     <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/TypeScript-Ready-blue?style=for-the-badge&logo=typescript" alt="TypeScript" /></a>
     <a href="https://nodejs.org/"><img src="https://img.shields.io/badge/Node.js-v20+-green?style=for-the-badge&logo=node.js" alt="Node.js" /></a>
   </p>
@@ -15,24 +15,23 @@
 
 The template relies on file-based routing to keep your logic strictly organized:
 
-- `src/configs/config.ts`: Define your app's static configurations, admin IDs, and global reply messages here.
-- `src/commands/`: Place strict Slash Commands (`/command`) here.
-- `src/actions/`: Place handlers for Block Kit interactivity (Button clicks, Select Menus) here.
-- `src/views/`: Place strict handlers for Modal submissions and closed events here.
-- `src/shortcuts/`: Place your Global and Message shortcuts here.
-- `src/events/`: Place your standard Slack Events API listeners (like `app_mention`, `message`) here.
+- `src/configs/config.ts`: Define your bot's developer IDs and global execution guard messages here.
+- `src/commands/`: Place your strict Slash Commands (`/command`) here.
+- `src/actions/`: Place handlers for interactive components like Buttons and Select Menus here.
+- `src/views/`: Place handlers for Modal submissions and closed views here.
+- `src/shortcuts/`: Place global and message shortcuts here.
+- `src/events/`: Place your Slack Event API listeners (like `app_home_opened`) here.
 
 ---
 
 ## ✨ Features
 
-This template abstracts away the boilerplate of registering commands and strict middleware routing for the Slack API. 
+This template abstracts away the boilerplate of registering components and interacting with the Slack API. 
 
-- **Component Routing**: Supports granular, file-based routing for **Slash Commands**, **Actions**, **Views**, **Shortcuts**, and **Events**. Handlers automatically register themselves on boot without cluttering a central file.
-- **Built-in Execution Guards**: Intercept commands globally before execution. Support for `adminOnly`, `workspaceRestriction`, `channelType` restrictions, `requiredArgs` enforcement, and per-user `cooldown` rates natively baked in.
-- **Block Kit UI Builders**: Simplify your UI creation with programmatic, type-safe helpers.
-- **Testing Suite Included**: Comes pre-configured with `vitest` for blazing fast unit testing.
-- **Socket Mode Default**: Pre-configured to use Socket Mode out of the box for frictionless local development without needing public HTTP endpoints.
+- **Map-Based Component Routing**: Supports granular, file-based routing for **Commands**, **Actions**, **Views**, **Shortcuts**, and **Events**.
+- **Execution Guards**: Built-in declarative middleware to handle permissions (`adminOnly`), spam prevention (`cooldown`), and context restrictions (`channelType`, `workspaceRestriction`).
+- **Block Kit Builder**: Includes a programmatic, fluent API (`BlockBuilder`) to easily construct complex Slack UIs without handwriting raw JSON.
+- **Testing Ready**: Pre-configured with Vitest for rapid unit testing and mocked Bolt contexts.
 
 > 📖 **[Read the Wiki](https://github.com/sea-deep/slack-app-template/wiki)** to learn how to create these commands and map your components.
 
@@ -42,7 +41,7 @@ This template abstracts away the boilerplate of registering commands and strict 
 
 ### Prerequisites
 - [Node.js](https://nodejs.org/) v20 or higher
-- A Slack App configured at [api.slack.com/apps](https://api.slack.com/apps)
+- A Slack App configured for Socket Mode (from the [Slack API Portal](https://api.slack.com/apps))
 
 ### Installation
 
@@ -64,18 +63,15 @@ This template abstracts away the boilerplate of registering commands and strict 
    ```
    > 🔑 *Open `.env` and insert your `SLACK_BOT_TOKEN`, `SLACK_SIGNING_SECRET`, and `SLACK_APP_TOKEN`.*
 
-4. **Enable Socket Mode**
-   Go to your App settings on Slack, navigate to **Socket Mode**, and toggle it on.
-
 ---
 
 ## 💻 Running the App
 
 | Mode | Command | Description |
 | :--- | :--- | :--- |
-| **Development** | `npm run dev` | Runs the app with `ts-node`. |
-| **Testing** | `npm test` | Runs the Vitest testing suite. |
+| **Development** | `npm run dev` | Runs the app with hot-reloading via `tsx`. |
 | **Production** | `npm run build && npm start` | Compiles the TypeScript to `dist/` and starts the Node process. |
+| **Testing** | `npm run test` | Executes the Vitest testing suite. |
 
 ---
 
@@ -85,15 +81,17 @@ This template abstracts away the boilerplate of registering commands and strict 
 slack-app-template/
 ├── src/
 │   ├── configs/           # Centralized configuration (config.ts)
-│   ├── structures/        # TypeScript interfaces (Command, Event, Action, View, Shortcut)
-│   ├── utilities/         # Core engine tools (env, logger, pathResolver, guards)
-│   ├── loaders/           # Loaders that dynamically register components to Bolt
+│   ├── structures/        # TypeScript interfaces (Command, Action, View)
+│   ├── utilities/         # Global Maps (collections.ts) & Guards (guards.ts)
+│   ├── helpers/           # Helper classes (Logger, BlockBuilder)
+│   ├── handlers/          # Dynamic component loader (loadComponents.ts)
 │   ├── commands/          # ➔ Your Slash Commands
-│   ├── events/            # ➔ Your Slack Events API Listeners
-│   ├── actions/           # ➔ Your Block Kit Actions
-│   ├── views/             # ➔ Your Modal Views
+│   ├── actions/           # ➔ Your Interactive Actions (Buttons, Menus)
+│   ├── views/             # ➔ Your Modals
 │   ├── shortcuts/         # ➔ Your Shortcuts
-│   └── app.ts             # Main entry point (registers loaders & launches app)
+│   ├── events/            # ➔ Your Event Listeners
+│   └── app.ts             # Main entry point (binds loaded components to Bolt)
+├── tests/                 # Vitest test suite
 ├── .env.example           # Environment template
 └── package.json           # Dependencies and scripts
 ```
@@ -118,4 +116,4 @@ We welcome all contributions! If you have a question, want to suggest a feature,
 
 ## 📄 License
 
-This project is licensed under the [GPL-3.0 License](./LICENSE).
+This project is licensed under the MIT License.
