@@ -50,7 +50,15 @@ async function main() {
           },
           autoAck
         );
-        if (allowed) await command.execute(args);
+        if (!allowed) return;
+        try {
+          await command.execute(args);
+        } catch (error) {
+          Logger.error(`Error executing command ${command.name}:`, error);
+          if (respond) {
+            await respond("An error occurred while executing this command.").catch(() => {});
+          }
+        }
       });
     }
 
@@ -66,7 +74,7 @@ async function main() {
 
         const allowed = await checkGuards(
           {
-            name: String(action.actionId),
+            name: id instanceof RegExp ? id.source : id,
             adminOnly: action.adminOnly,
             cooldown: action.cooldown,
             channelType: action.channelType,
@@ -81,7 +89,16 @@ async function main() {
           },
           autoAck
         );
-        if (allowed) await action.execute(args);
+        if (!allowed) return;
+        try {
+          await action.execute(args);
+        } catch (error) {
+          const actionName = id instanceof RegExp ? id.source : id;
+          Logger.error(`Error executing action ${actionName}:`, error);
+          if (respond) {
+            await respond("An error occurred while executing this action.").catch(() => {});
+          }
+        }
       });
     }
 
@@ -95,7 +112,7 @@ async function main() {
         
         const allowed = await checkGuards(
           {
-            name: String(view.callbackId),
+            name: id instanceof RegExp ? id.source : id,
             adminOnly: view.adminOnly,
             cooldown: view.cooldown,
             workspaceRestriction: view.workspaceRestriction,
@@ -107,7 +124,13 @@ async function main() {
           },
           autoAck
         );
-        if (allowed) await view.execute(args);
+        if (!allowed) return;
+        try {
+          await view.execute(args);
+        } catch (error) {
+          const viewName = id instanceof RegExp ? id.source : id;
+          Logger.error(`Error executing view ${viewName}:`, error);
+        }
       });
     }
 
@@ -121,7 +144,7 @@ async function main() {
         
         const allowed = await checkGuards(
           {
-            name: String(shortcut.callbackId),
+            name: id instanceof RegExp ? id.source : id,
             adminOnly: shortcut.adminOnly,
             cooldown: shortcut.cooldown,
             workspaceRestriction: shortcut.workspaceRestriction,
@@ -133,7 +156,13 @@ async function main() {
           },
           autoAck
         );
-        if (allowed) await shortcut.execute(args);
+        if (!allowed) return;
+        try {
+          await shortcut.execute(args);
+        } catch (error) {
+          const shortcutName = id instanceof RegExp ? id.source : id;
+          Logger.error(`Error executing shortcut ${shortcutName}:`, error);
+        }
       });
     }
 
@@ -143,7 +172,11 @@ async function main() {
       app.event(name, async (args) => {
         // Events don't have ack, and usually no direct user feedback channel in the same way,
         // so guards are usually minimal. We just execute them.
-        await event.execute(args);
+        try {
+          await event.execute(args);
+        } catch (error) {
+          Logger.error(`Error executing event ${name}:`, error);
+        }
       });
     }
 
